@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { connectToLogin } from "../../service/Api";
+import { connectToLogin, connectToProfile } from "../../service/Api";
 import { useDispatch } from "react-redux";
-import { updateUsername, updatePassword, authRequest, authSuccess, authError } from "../../store/features/authSlice";
+import { updateUsername, updatePassword, setToken, authRequest, authSuccess, authError } from "../../store/features/authSlice";
 import './SignIn.css'
 
 export default function SignIn() {
@@ -12,19 +12,28 @@ export default function SignIn() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = {
-            username: username,
+            email: username,
             password: password
         }
         dispatch(authRequest());
         connectToLogin(data)
             .then((response) => {
-                dispatch(updateUsername(response.data.username));
-                dispatch(updatePassword(response.data.password));
+                dispatch(updateUsername(username));
+                dispatch(updatePassword(password));
+                dispatch(setToken(response.data.body.token));
                 dispatch(authSuccess());
             })
             .catch((error) => {
                 dispatch(authError(error.message));
             });
+        connectToProfile(localStorage.getItem('token')
+            .then((response) => {
+                console.log(response.data.body);
+            })
+            .catch((error) => {
+                console.log(error);
+            }),
+        );
     }
 
     return (

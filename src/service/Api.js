@@ -10,14 +10,30 @@ export function connectToLogin(data) {
             'Content-Type': 'application/json',
         },
     };
-    axios(options)
+    return axios(options)
         .then((response) => {
-            console.log(response);
+            return response
         })
         .catch((error) => {
             console.log(error);
         });
 }
 
-
-
+export function connectToProfile(token) {
+    const url = 'http://localhost:3001/api/v1/user/profile';
+    const options = {
+        method: 'post',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    return axios(options)
+        .then((response) => {
+            return response
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}

@@ -6,17 +6,21 @@ import Home from './pages/Home/Home.js'
 import SignIn from './pages/SignIn/SignIn.js'
 import User from './pages/User/User.js'
 import Footer from './components/Footer/Footer.js';
+import { Provider } from 'react-redux';
+import store from './store/index.js';
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <Header />
-    <Routes>
-      <Route index element={<Home />}></Route>
-      <Route path='/SignIn' element={<SignIn />}></Route>
-      <Route path='/User' element={<User />}></Route>
-    </Routes>
-    <Footer />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route index element={<Home />}></Route>
+        <Route path='/SignIn' element={<SignIn />}></Route>
+        <Route path='/User' element={<User />}></Route>
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  </Provider>
 );
