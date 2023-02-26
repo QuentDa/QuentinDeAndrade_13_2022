@@ -9,31 +9,30 @@ export default function User() {
     const dispatch = useDispatch();
     const user = useSelector(getUser);
 
-
-    function getProfile() {
-        connectToProfile()
+    useEffect(() => {
+        function getProfile() {
+          connectToProfile()
             .then((response) => {
-                const user = {
-                    firstName: response.data.body.firstName,
-                    lastName: response.data.body.lastName
-                }
-                dispatch(updateUser(user));
-                console.log(response); 
+              const user = {
+                firstName: response.data.body.firstName,
+                lastName: response.data.body.lastName
+              }
+              dispatch(updateUser({ firstName: user.firstName, lastName: user.lastName }));
+              console.log(response);
             })
             .catch((error) => {
-                console.log(error);
+              console.log(error);
             });
-    }
-
-    useEffect(() => {
+        }
+    
         getProfile();
-    });
+      }, [dispatch]);
     
     return (
         <div>
             <main className="main bg-dark">
                 <div className="header">
-                    <h1>Welcome back<br />Tony</h1>
+                    <h1>Welcome back<br />{user.firstName} {user.lastName}</h1>
                     <button className="edit-button">Edit Name</button>
                 </div>
                 <h2 className="sr-only">Accounts</h2>

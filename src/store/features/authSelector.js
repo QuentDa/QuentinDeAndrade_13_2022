@@ -7,7 +7,7 @@ export function getToken(state) {
 }
 
 export function getUser(state) {
-    const selectFirstName = state.AUTH.user.firstName;
-    const selectLastName = state.AUTH.user.lastName;
-    return { selectFirstName, selectLastName };
+    const firstName = state.AUTH.user.firstName;
+    const lastName = state.AUTH.user.lastName;
+    return { firstName, lastName };
 }
