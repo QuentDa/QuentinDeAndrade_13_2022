@@ -1,13 +1,22 @@
 import React, { useState } from "react";
-import { connectToLogin, connectToProfile } from "../../service/Api";
+import { useNavigate } from "react-router-dom";
+import { connectToLogin } from "../../service/Api";
 import { useDispatch } from "react-redux";
-import { updateUsername, updatePassword, setToken, authRequest, authSuccess, authError } from "../../store/features/authSlice";
+import { updateUsername, setToken, authRequest, authSuccess, authError } from "../../store/features/authSlice";
 import './SignIn.css'
 
 export default function SignIn() {
+    //vérifier localstorage
+    //useEffect pour rediriger
+
     const dispatch = useDispatch();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    function goToProfile() {
+        navigate('/User');
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,21 +28,13 @@ export default function SignIn() {
         connectToLogin(data)
             .then((response) => {
                 dispatch(updateUsername(username));
-                dispatch(updatePassword(password));
                 dispatch(setToken(response.data.body.token));
                 dispatch(authSuccess());
+                goToProfile();
             })
             .catch((error) => {
                 dispatch(authError(error.message));
             });
-        connectToProfile(localStorage.getItem('token')
-            .then((response) => {
-                console.log(response.data.body);
-            })
-            .catch((error) => {
-                console.log(error);
-            }),
-        );
     }
 
     return (
@@ -49,7 +50,6 @@ export default function SignIn() {
                                 value={username}
                                 onChange={(e) => {
                                         setUsername(e.target.value);
-                                        dispatch(updateUsername(e.target.value));
                                     }
                                 }
                                 type="text"
@@ -62,7 +62,6 @@ export default function SignIn() {
                                 value={password}
                                 onChange={(e) => {
                                     setPassword(e.target.value);
-                                    dispatch(updatePassword(e.target.value));
                                   }}
                                 type="password"
                                 id="password"

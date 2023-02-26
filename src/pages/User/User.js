@@ -1,14 +1,39 @@
-import React from "react";
-import dbLogin from "../../service/Api";
+import React, { useEffect } from "react";
+import { connectToProfile } from "../../service/Api";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../store/features/authSlice";
 import "./User.css"
+import { getUser } from "../../store/features/authSelector";
 
 export default function User() {
+    const dispatch = useDispatch();
+    const user = useSelector(getUser);
+
+
+    function getProfile() {
+        connectToProfile()
+            .then((response) => {
+                const user = {
+                    firstName: response.data.body.firstName,
+                    lastName: response.data.body.lastName
+                }
+                dispatch(updateUser(user));
+                console.log(response); 
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    useEffect(() => {
+        getProfile();
+    });
     
     return (
         <div>
             <main className="main bg-dark">
                 <div className="header">
-                    <h1>Welcome back<br />Tony Jarvis!</h1>
+                    <h1>Welcome back<br />Tony</h1>
                     <button className="edit-button">Edit Name</button>
                 </div>
                 <h2 className="sr-only">Accounts</h2>

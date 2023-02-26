@@ -19,7 +19,8 @@ export function connectToLogin(data) {
         });
 }
 
-export function connectToProfile(token) {
+export function connectToProfile() {
+    const token = localStorage.getItem('token');
     const url = 'http://localhost:3001/api/v1/user/profile';
     const options = {
         method: 'post',

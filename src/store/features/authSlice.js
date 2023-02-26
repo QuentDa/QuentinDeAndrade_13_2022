@@ -4,7 +4,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     username: '',
-    password: '',
+    user: {
+      firstName: '',
+      lastName: '',
+    },
     token: '',
     error: '',
     isLoading: false,
@@ -13,10 +16,11 @@ const authSlice = createSlice({
     updateUsername: (state, action) => {
       state.username = action.payload;
     },
-    updatePassword: (state, action) => {
-      state.password = action.payload;
+    updateUser: (state, action) => {
+      state.user.firstName = action.payload;
+      state.user.lastName = action.payload;
     },
-    setToken: (state, action) => {
+    setToken: (state, action) => { 
       state.token = action.payload;
       localStorage.setItem('token', action.payload)
     },
@@ -37,7 +41,7 @@ const authSlice = createSlice({
 
 export const {
   updateUsername,
-  updatePassword,
+  updateUser,
   setToken,
   authRequest,
   authSuccess,
