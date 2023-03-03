@@ -10,7 +10,7 @@ export default function User() {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
     if (!token) {
-        navigate('/SignIn');
+        navigate('/');
     }
 
     const dispatch = useDispatch();

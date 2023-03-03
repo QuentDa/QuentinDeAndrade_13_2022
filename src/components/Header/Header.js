@@ -9,7 +9,7 @@ import './Header.css';
 export default function Header() {
     const dispatch = useDispatch();
     const token = useSelector(getToken);
-    
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -18,7 +18,7 @@ export default function Header() {
             localStorage.removeItem('token');
         }
     }, [dispatch]);
-    
+
     function handleLogout() {
         localStorage.removeItem('token');
         dispatch(setToken(''));
@@ -37,9 +37,14 @@ export default function Header() {
                 </NavLink>
                 <div>
                     {token ? (
-                        <span onClick={handleLogout} className="main-nav-item">
-                            Se déconnecter
-                        </span>
+                        <div>
+                            <NavLink to="/User" className="main-nav-item">
+                                Profile
+                            </NavLink>
+                            <span onClick={handleLogout} className="main-nav-item">
+                                Se déconnecter
+                            </span>
+                        </div>
                     ) : (
                         <NavLink to="/SignIn" className="main-nav-item">
                             <i className="fa fa-user-circle"></i>
