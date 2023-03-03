@@ -1,0 +1,23 @@
+.header_profile_infos input {
+    width: 20%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    margin: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.header_profile_infos .save-button, .header_profile_infos .cancel-button {
+    width: 13%;
+    height: 40px;
+    border: 2px solid #978eff;
+    border-radius: 5px;
+    padding: 0 10px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #978eff;
+    background-color: #fff;
+}

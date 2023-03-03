@@ -38,3 +38,24 @@ export function connectToProfile() {
             console.log(error);
         });
 }
+
+export function editProfile(userData) {
+    const url = 'http://localhost:3001/api/v1/user/profile';
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'put',
+        url: url,
+        data: userData,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    return axios(options)
+        .then((response) => {
+            return response
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
