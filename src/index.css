@@ -15,6 +15,7 @@ body {
 
 .main {
   flex: 1;
+  height: 105%;
 }
 
 .bg-dark {
@@ -203,6 +204,10 @@ body {
 }
 
 .footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
   display: flex;
   justify-content: center;
   border-top: 2px solid #ccc;
