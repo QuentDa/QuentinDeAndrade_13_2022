@@ -9,9 +9,11 @@ import { getUser } from "../../store/features/authSelector";
 export default function User() {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    if (!token) {
-        navigate('/');
-    }
+    useEffect(() => {
+        if (!token) {
+            navigate('/');
+        }
+    }, [navigate, token]);
 
     const dispatch = useDispatch();
     const user = useSelector(getUser);

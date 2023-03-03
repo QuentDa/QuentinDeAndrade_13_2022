@@ -1,0 +1,305 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /user/login:
+    post:
+      tags:
+        - User Module
+      summary: Login
+      description: API for Login
+      parameters:
+        - in: body
+          name: body
+          description: Login Payload
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Login Successfully
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      parameters:
+        - in: body
+          name: body
+          description: Signup Payload
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Signup Successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/transaction:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: "User Transaction API"
+      description: "Get the list of all transactions made by the user"
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - name: "userId"
+          in: "query"
+          description: "User ID"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  description: "Transaction ID"
+                amount:
+                  type: "number"
+                  description: "Transaction amount"
+                date:
+                  type: "string"
+                  description: "Transaction date (format: MM-JJ-YYYY)"
+                description:
+                  type: "string"
+                  description: "Transaction description"
+                type:
+                  type: "string"
+                  description: "Transaction type"
+                category:
+                  type: "string"
+                  description: "Category of the transaction"
+                notes:
+                  type: "string"
+                  description: "Personal notes that a user can add for the transaction"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: "Update a User Transaction"
+      description: "Update an existing transaction made by the user"
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: "body"
+          name: "transaction"
+          description: "Transaction object that needs to be updated"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              category:
+                type: "string"
+                description: "Category of the transaction"
+              notes:
+                type: "string"
+                description: "Personal notes that a user can add for the transaction"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                description: "Transaction ID"
+              amount:
+                type: "number"
+                description: "Transaction amount"
+              date:
+                type: "string"
+                description: "Transaction date (format: MM-JJ-YYYY)"
+              description:
+                type: "string"
+                description: "Transaction description"
+              type:
+                type: "string"
+                description: "Transaction type"
+              category:
+                type: "string"
+                description: "Category of the transaction"
+              notes:
+                type: "string"
+                description: "Personal notes that a user can add for the transaction"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  User:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+  Login:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: integer
+      amount:
+        type: integer
+      date:
+        type: string
+      description:
+        type: string
+      type:
+        type: string
+      category:
+        type: string
+      notes:
+        type: string
+  EditTransaction:
+    type: object
+    properties:
+      category:
+        type: string
+      notes:
+        type: string

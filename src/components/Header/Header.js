@@ -42,7 +42,7 @@ export default function Header() {
                                 Profile
                             </NavLink>
                             <span onClick={handleLogout} className="main-nav-item">
-                                Se déconnecter
+                                Logout
                             </span>
                         </div>
                     ) : (
