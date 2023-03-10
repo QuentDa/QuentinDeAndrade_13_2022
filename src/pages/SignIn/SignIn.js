@@ -6,9 +6,6 @@ import { updateUsername, setToken, authRequest, authSuccess, authError } from ".
 import './SignIn.css'
 
 export default function SignIn() {
-    //vérifier localstorage
-    //useEffect pour rediriger
-
     const dispatch = useDispatch();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

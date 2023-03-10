@@ -110,7 +110,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transaction:
+  /transaction:
     get:
       security:
         - Bearer: []
@@ -123,11 +123,6 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
-        - name: "userId"
-          in: "query"
-          description: "User ID"
-          required: true
-          type: "integer"
       responses:
         200:
           description: "OK"
@@ -148,24 +143,14 @@ paths:
                 description:
                   type: "string"
                   description: "Transaction description"
-                type:
-                  type: "string"
-                  description: "Transaction type"
-                category:
-                  type: "string"
-                  description: "Category of the transaction"
-                notes:
-                  type: "string"
-                  description: "Personal notes that a user can add for the transaction"
-        400:
-          description: "Bad Request"
         401:
           description: "Unauthorized"
         404:
           description: "Not Found"
         500:
           description: "Internal Server Error"
-    put:
+  /transaction/{transactionId}:
+    patch:
       security:
         - Bearer: []
       tags:
@@ -173,12 +158,16 @@ paths:
       summary: "Update a User Transaction"
       description: "Update an existing transaction made by the user"
       parameters:
+        - in: path
+          name: transactionId
+          description: "The ID of the transaction"
+          required: true
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           required: true
         - in: "body"
-          name: "transaction"
+          name: "body"
           description: "Transaction object that needs to be updated"
           required: true
           schema:
@@ -196,21 +185,6 @@ paths:
           schema:
             type: "object"
             properties:
-              id:
-                type: "integer"
-                description: "Transaction ID"
-              amount:
-                type: "number"
-                description: "Transaction amount"
-              date:
-                type: "string"
-                description: "Transaction date (format: MM-JJ-YYYY)"
-              description:
-                type: "string"
-                description: "Transaction description"
-              type:
-                type: "string"
-                description: "Transaction type"
               category:
                 type: "string"
                 description: "Category of the transaction"
@@ -219,6 +193,44 @@ paths:
                 description: "Personal notes that a user can add for the transaction"
         400:
           description: "Bad Request"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: "User Transaction API"
+      description: "Get a transaction by ID"
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  description: "Transaction ID"
+                type:
+                  type: "string"
+                  description: "Transaction type"
+                category:
+                  type: "string"
+                  description: "Category of the transaction"
+                notes:
+                  type: "string"
+                  description: "Personal notes that a user can add for the transaction"
         401:
           description: "Unauthorized"
         404:
