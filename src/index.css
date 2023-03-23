@@ -294,3 +294,8 @@ body {
     width: 200px;
   }
 }
+.formError{
+  color: red;
+  text-align: left;
+  margin-top: 10px;
+}

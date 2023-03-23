@@ -11,3 +11,7 @@ export function getUser(state) {
     const lastName = state.AUTH.user.lastName;
     return { firstName, lastName };
 }
+
+export function getError(state) {
+    return state.AUTH.error;
+}

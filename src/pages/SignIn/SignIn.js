@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { connectToLogin } from "../../service/Api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUsername, setToken, authRequest, authSuccess, authError } from "../../store/features/authSlice";
 import './SignIn.css'
+import { getError } from "../../store/features/authSelector";
 
 export default function SignIn() {
     const dispatch = useDispatch();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const error = useSelector(getError)
 
     function goToProfile() {
         navigate('/User');
@@ -30,7 +32,7 @@ export default function SignIn() {
                 goToProfile();
             })
             .catch((error) => {
-                dispatch(authError(error.message));
+                dispatch(authError(true));
             });
     }
 
@@ -70,6 +72,8 @@ export default function SignIn() {
                             >
                         </div>
 
+                        { error ? <span className="formError">Invalid username or password</span> : null}
+                        
                         <button type="submit" className="sign-in-button">Sign In</button>
                     </form>
                 </section>

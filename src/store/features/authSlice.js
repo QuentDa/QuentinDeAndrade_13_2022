@@ -9,7 +9,7 @@ const authSlice = createSlice({
       lastName: '',
     },
     token: '',
-    error: '',
+    error: false,
     isLoading: false,
   },
   reducers: {
